@@ -164,11 +164,13 @@ if get_hidden_gui or gethui then
     local hiddenUI = get_hidden_gui or gethui
     local Main = Instance.new("ScreenGui")
     Main.Name = randomString()
+    Main.DisplayOrder = 1
     Main.Parent = hiddenUI()
     PARENT = Main
 elseif (not is_sirhurt_closure) and (syn and syn.protect_gui) then
     local Main = Instance.new("ScreenGui")
     Main.Name = randomString()
+    Main.DisplayOrder = 1
     syn.protect_gui(Main)
     Main.Parent = COREGUI
     PARENT = Main
@@ -179,6 +181,7 @@ else
         else
             local Main = Instance.new("ScreenGui")
             Main.Name = randomString()
+            Main.DisplayOrder = 1
             Main.Parent = COREGUI
             PARENT = Main
         end
@@ -186,6 +189,7 @@ else
     if not SetupSuccess then
         local Main = Instance.new("ScreenGui")
         Main.Name = randomString()
+        Main.DisplayOrder = 1
         COREGUI = PlayerGui
         Main.Parent = COREGUI
         PARENT = Main
@@ -4759,6 +4763,7 @@ function onDied()
                 if getRoot(Players.LocalPlayer.Character) then
                     lastDeath = getRoot(Players.LocalPlayer.Character).CFrame
                 end
+                pcall(function() if COREGUI == PlayerGui then _G.Dp638MqzuBrUX7Awf5J9eTJyb4C7a0eKG2ff6 = false end end)
             end)
         else
             wait(2)
