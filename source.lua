@@ -164,13 +164,13 @@ if get_hidden_gui or gethui then
     local hiddenUI = get_hidden_gui or gethui
     local Main = Instance.new("ScreenGui")
     Main.Name = randomString()
-    Main.DisplayOrder = 1
+    Main.DisplayOrder = 9e8
     Main.Parent = hiddenUI()
     PARENT = Main
 elseif (not is_sirhurt_closure) and (syn and syn.protect_gui) then
     local Main = Instance.new("ScreenGui")
     Main.Name = randomString()
-    Main.DisplayOrder = 1
+    Main.DisplayOrder = 9e8
     syn.protect_gui(Main)
     Main.Parent = COREGUI
     PARENT = Main
@@ -181,7 +181,7 @@ else
         else
             local Main = Instance.new("ScreenGui")
             Main.Name = randomString()
-            Main.DisplayOrder = 1
+            Main.DisplayOrder = 9e8
             Main.Parent = COREGUI
             PARENT = Main
         end
@@ -189,7 +189,7 @@ else
     if not SetupSuccess then
         local Main = Instance.new("ScreenGui")
         Main.Name = randomString()
-        Main.DisplayOrder = 1
+        Main.DisplayOrder = 9e8
         COREGUI = PlayerGui
         Main.Parent = COREGUI
         PARENT = Main
