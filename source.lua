@@ -1,5 +1,4 @@
 if _G.Dp638MqzuBrUX7Awf5J9eTJyb4C7a0eKG2ff6 and not _G.IY_DEBUG_Dp638MqzuBrUX7Awf5J9eTJyb4C7a0eKG2ff6 then
-    -- error("IY is already running!", 0)
     return
 end
 
@@ -1466,7 +1465,7 @@ PluginsHint.Position = UDim2.new(0, 25, 0, 40)
 PluginsHint.Size = UDim2.new(0, 200, 0, 50)
 PluginsHint.Font = Enum.Font.SourceSansItalic
 PluginsHint.TextSize = 16
-PluginsHint.Text = "Download plugins from the IY Discord (discord.io/infiniteyield)"
+PluginsHint.Text = "Download plugins from the IY Discord (discord.gg/dYHag43eeU)"
 PluginsHint.TextColor3 = Color3.new(1, 1, 1)
 PluginsHint.TextStrokeColor3 = Color3.new(1, 1, 1)
 PluginsHint.TextWrapped = true
@@ -2570,8 +2569,6 @@ eventEditor = (function()
                 end
             end)
 
-            --eventF:GetPropertyChangedSignal("AbsoluteSize"):Connect(resizeList)
-
             eventF.Parent = eventListHolder
 
             refreshCommands()
@@ -2742,7 +2739,7 @@ reference = (function()
         {113,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=4,Name="Header",Parent={112},Position=UDim2.new(0,8,0,5),Size=UDim2.new(1,-8,0,20),Text="Get Further Help",TextColor3=Color3.new(1,1,1),TextSize=20,TextXAlignment=0,ZIndex=10,}},
         {114,"TextLabel",{BackgroundColor3=Color3.new(1,1,1),BackgroundTransparency=1,Font=3,Name="Text",Parent={112},Position=UDim2.new(0,8,0,30),Size=UDim2.new(1,-8,0,32),Text="You can join the Discord server to get support with IY,  and read up on more documentation such as the Plugin API.",TextColor3=Color3.new(1,1,1),TextSize=14,TextWrapped=true,TextXAlignment=0,ZIndex=10,}},
         {115,"Frame",{BackgroundColor3=Color3.new(0.1803921610117,0.1803921610117,0.1843137294054),BorderSizePixel=0,Name="Line",Parent={112},Position=UDim2.new(0,10,1,-1),Size=UDim2.new(1,-20,0,1),Visible=false,ZIndex=10,}},
-        {116,"TextButton",{BackgroundColor3=Color3.new(0.48627451062202,0.61960786581039,0.85098040103912),BorderColor3=Color3.new(0.1803921610117,0.1803921610117,0.1843137294054),Font=4,Name="InviteButton",Parent={112},Position=UDim2.new(0,5,0,75),Size=UDim2.new(1,-10,0,25),Text="Copy Discord Invite Link (https://discord.io/infiniteyield)",TextColor3=Color3.new(0.1803921610117,0.1803921610117,0.1843137294054),TextSize=16,ZIndex=10,}},
+        {116,"TextButton",{BackgroundColor3=Color3.new(0.48627451062202,0.61960786581039,0.85098040103912),BorderColor3=Color3.new(0.1803921610117,0.1803921610117,0.1843137294054),Font=4,Name="InviteButton",Parent={112},Position=UDim2.new(0,5,0,75),Size=UDim2.new(1,-10,0,25),Text="Copy Discord Invite Link (https://discord.gg/dYHag43eeU)",TextColor3=Color3.new(0.1803921610117,0.1803921610117,0.1843137294054),TextSize=16,ZIndex=10,}},
     })
     for i,v in pairs(main.Content.List:GetDescendants()) do
         if v:IsA("TextLabel") then
@@ -2761,7 +2758,7 @@ reference = (function()
     inviteButton.MouseButton1Click:Connect(function()
         local func = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
         if func then
-            func("https://discord.io/infiniteyield")
+            func("https://discord.gg/dYHag43eeU")
             inviteButton.Text = "Copied"
         else
             inviteButton.Text = "No Clipboard Function, type out the link"
@@ -2770,7 +2767,7 @@ reference = (function()
         lastPress = pressTime
         wait(2)
         if lastPress ~= pressTime then return end
-        inviteButton.Text = "Copy Discord Invite Link (https://discord.io/infiniteyield)"
+        inviteButton.Text = "Copy Discord Invite Link (https://discord.gg/dYHag43eeU)"
     end)
     dragGUI(main)
     main.Parent = PARENT
@@ -4227,8 +4224,6 @@ task.spawn(function()
                 chatboxFocusLostC = chatbox.FocusLost:Connect(chatboxFocusLost)
             end
         end)
-        --else
-        --print('Custom chat detected. Will not provide suggestions for commands typed in the chat.')
     end
 end)
 
@@ -4255,7 +4250,7 @@ function autoComplete(str,curText)
     Cmdbar.Text = curText:sub(1,subPos) .. str:sub(1, stop - 1)..' '
     wait()
     Cmdbar.Text = Cmdbar.Text:gsub( '\t', '' )
-    Cmdbar.CursorPosition = #Cmdbar.Text+1--1020
+    Cmdbar.CursorPosition = #Cmdbar.Text+1
 end
 
 CMDs = {}
@@ -6263,7 +6258,7 @@ end)
 
 addcmd('discord', {'support', 'help'}, function(args, speaker)
     if toClipboard then
-        toClipboard('https://discord.com/invite/dYHag43eeU')
+        toClipboard('https://discord.gg/dYHag43eeU')
         notify('Discord Invite', 'Copied to clipboard!\ndiscord.gg/dYHag43eeU')
     else
         notify('Discord Invite', 'discord.gg/dYHag43eeU')
@@ -6670,7 +6665,6 @@ addcmd('autorejoin',{'autorj'},function(args, speaker)
 end)
 
 addcmd('serverhop',{'shop'},function(args, speaker)
-    -- thanks to NoobSploit for fixing
     if httprequest then
         local servers = {}
         local req = httprequest({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100", PlaceId)})
@@ -7040,7 +7034,6 @@ end)
 
 CFspeed = 50
 addcmd('cframefly', {'cfly'}, function(args, speaker)
-    -- Full credit to peyton#9148 (apeyton)
     speaker.Character:FindFirstChildOfClass('Humanoid').PlatformStand = true
     local Head = speaker.Character:WaitForChild("Head", math.huge)
     Head.Anchored = true
@@ -7432,13 +7425,11 @@ end)
 
 
 local coreGuiTypeNames = {
-    -- predefined aliases
     ["inventory"] = Enum.CoreGuiType.Backpack,
     ["leaderboard"] = Enum.CoreGuiType.PlayerList,
     ["emotes"] = Enum.CoreGuiType.EmotesMenu
 }
 
--- Load the full list of enums
 for _, enumItem in ipairs(Enum.CoreGuiType:GetEnumItems()) do
     coreGuiTypeNames[enumItem.Name:lower()] = enumItem
 end
@@ -9080,7 +9071,6 @@ invisRunning = false
 addcmd('invisible',{'invis'},function(args, speaker)
     if invisRunning then return end
     invisRunning = true
-    -- Full credit to AmokahFox @V3rmillion
     local Player = speaker
     repeat wait(.1) until Player.Character
     local Character = Player.Character
@@ -9369,7 +9359,6 @@ end)
 
 addcmd('nohead',{'rhead','headless'},function(args, speaker)
     if sethidden then
-        -- Full credit to Thomas_Cornez#0272 @Discord
         local lplr = Players.LocalPlayer
         local char = lplr.Character
         local rigType = tostring(char:FindFirstChildOfClass('Humanoid').RigType) == "Enum.HumanoidRigType.R6" and 1 or tostring(char:FindFirstChildOfClass('Humanoid').RigType) == "Enum.HumanoidRigType.R15" and 2
@@ -9566,7 +9555,6 @@ end)
 addcmd('edgejump',{'ejump'},function(args, speaker)
     local Char = speaker.Character
     local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
-    -- Full credit to NoelGamer06 @V3rmillion
     local state
     local laststate
     local lastcf
@@ -10039,7 +10027,6 @@ addcmd('deleteselectedtool',{'dst'},function(args, speaker)
 end)
 
 addcmd('console',{},function(args, speaker)
-    -- Thanks wally!!
     notify("Loading",'Hold on a sec')
     local _, str = pcall(function()
         return game:HttpGet("https://raw.githubusercontent.com/TT0-0wiZZ/backup/main/console.lua", true)
@@ -10086,15 +10073,13 @@ addcmd('olddex', {'odex'}, function(args, speaker)
 
     local function Load(Obj, Url)
         local function GiveOwnGlobals(Func, Script)
-            -- Fix for this edit of dex being poorly made
-            -- I (Alex) would like to commemorate whoever added this dex in somehow finding the worst dex to ever exist
             local Fenv, RealFenv, FenvMt = {}, {
                 script = Script,
                 getupvalue = function(a, b)
-                    return nil -- force it to use globals
+                    return nil
                 end,
-                getreg = function() -- It loops registry for some idiotic reason so stop it from doing that and just use a global
-                    return {} -- force it to use globals
+                getreg = function()
+                    return {}
                 end,
                 getprops = getprops or function(inst)
                     if getproperties then
@@ -10149,8 +10134,6 @@ end)
 
 addcmd('remotespy',{'rspy'},function(args, speaker)
     notify("Loading",'Hold on a sec')
-    -- Full credit to exx, creator of SimpleSpy
-    -- also thanks to NoobSploit for fixing
     loadstring(game:HttpGet("https://raw.githubusercontent.com/TT0-0wiZZ/backup/main/SimpleSpyV3/main.lua"))()
 end)
 
@@ -10831,7 +10814,6 @@ addcmd('clearhats',{'cleanhats'},function(args, speaker)
 end)
 
 addcmd('vr',{},function(args, speaker)
-    -- Full credit to Abacaxl @V3rmillion
     notify("Loading", "Hold on a sec")
     loadstring(game:HttpGet("https://raw.githubusercontent.com/TT0-0wiZZ/backup/main/vr.lua"))()
 end)
@@ -12218,7 +12200,6 @@ if PluginsTable ~= nil or PluginsTable ~= {} then
     FindPlugins(PluginsTable)
 end
 
--- Events
 eventEditor.RegisterEvent("OnExecute")
 eventEditor.RegisterEvent("OnSpawn",{
     {Type="Player",Name="Player Filter ($1)"}
@@ -12327,7 +12308,7 @@ IYMouse.Move:Connect(checkTT)
 
 task.spawn(function()
     local success, latestVersionInfo = pcall(function() 
-        local versionJson = game:HttpGet('https://raw.githubusercontent.com/ttwizz/infiniteyield/master/version')
+        local versionJson = game:HttpGet('https://raw.githubusercontent.com/ttwizz/infiniteyield/master/version.json')
         return HttpService:JSONDecode(versionJson)
     end)
 

@@ -1,9 +1,9 @@
 # Infinite Yield 
-[![Discord](https://media.discordapp.net/attachments/338403017894395905/668536741942263808/Discord-Logo-Color.png)](https://discord.io/infiniteyield)
+[![Discord](https://media.discordapp.net/attachments/338403017894395905/668536741942263808/Discord-Logo-Color.png)](https://discord.gg/dYHag43eeU)
 The best command line script for roblox.
 
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ttwizz/infiniteyield/master/source", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ttwizz/infiniteyield/master/source.lua", true))()
 ```
 
  - Currently 377 commands
