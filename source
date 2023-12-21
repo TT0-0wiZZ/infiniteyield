@@ -6656,7 +6656,7 @@ addcmd('autorejoin',{'autorj'},function(args, speaker)
             Err:GetPropertyChangedSignal("Text"):Connect(function()
                 if Err.Text:sub(0, 12) == "Disconnected" then
                     if #Players:GetPlayers() <= 1 then
-                        Players.LocalPlayer:Kick("\nRejoining...")
+                        Players.LocalPlayer:Kick("Rejoining...")
                         wait()
                         TeleportService:Teleport(PlaceId, Players.LocalPlayer)
                     else
@@ -6747,7 +6747,11 @@ addcmd('joinplayer',{'joinp'},function(args, speaker)
 end)
 
 addcmd('exit',{},function(args, speaker)
-    game:shutdown() 
+    if COREGUI ~= PlayerGui then
+        game:Shutdown()
+    else
+        Players.LocalPlayer:Kick("Shutdown")
+    end
 end)
 
 local Noclipping = nil
@@ -11877,7 +11881,7 @@ local RolewatchConnection = Players.PlayerAdded:Connect(function(player)
     if player:IsInGroup(RolewatchData.Group) then
         if tostring(player:GetRoleInGroup(RolewatchData.Group)):lower() == RolewatchData.Role:lower() then
             if RolewatchData.Leave == true then
-                Players.LocalPlayer:Kick("\n\nRolewatch\nPlayer \"" .. tostring(player.Name) .. "\" has joined with the Role \"" .. RolewatchData.Role .. "\"\n")
+                Players.LocalPlayer:Kick("Rolewatch | Player \"" .. tostring(player.Name) .. "\" has joined with the Role \"" .. RolewatchData.Role .. "\"")
             else
                 notify("Rolewatch", "Player \"" .. tostring(player.Name) .. "\" has joined with the Role \"" .. RolewatchData.Role .. "\"")
             end
