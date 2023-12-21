@@ -1938,11 +1938,12 @@ ProximityPromptService = game:GetService("ProximityPromptService")
 StatsService = game:GetService("Stats")
 MaterialService = game:GetService("MaterialService")
 
-sethidden = sethiddenproperty or set_hidden_property or set_hidden_prop
-gethidden = gethiddenproperty or get_hidden_property or get_hidden_prop
-queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
-PlaceId, JobId = game.PlaceId, game.JobId
+local sethidden = sethiddenproperty or set_hidden_property or set_hidden_prop
+local gethidden = gethiddenproperty or get_hidden_property or get_hidden_prop
+local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+local httprequest = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+local PlaceId, JobId = game.PlaceId, game.JobId
+local clipBoard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
 local IsOnMobile = UserInputService.TouchEnabled and not (UserInputService.KeyboardEnabled and UserInputService.GamepadEnabled and GuiService:IsTenFootInterface())
 
 function writefileSoftware()
@@ -1975,7 +1976,6 @@ function r15(plr)
 end
 
 function toClipboard(String)
-    local clipBoard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
     if clipBoard then
         clipBoard(String)
         notify('Clipboard','Copied to clipboard')
@@ -6257,7 +6257,7 @@ addcmd('clraliases',{},function(args, speaker)
 end)
 
 addcmd('discord', {'support', 'help'}, function(args, speaker)
-    if toClipboard then
+    if clipBoard then
         toClipboard('https://discord.gg/dYHag43eeU')
         notify('Discord Invite', 'Copied to clipboard!\ndiscord.gg/dYHag43eeU')
     else
