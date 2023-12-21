@@ -628,7 +628,7 @@ Credits.Position = UDim2.new(0, 0, 0.9, 30)
 Credits.Size = UDim2.new(0, 250, 0, 20)
 Credits.Font = Enum.Font.SourceSansLight
 Credits.FontSize = Enum.FontSize.Size18
-Credits.Text = "Edge // Zwolf // Moon // Toon"
+Credits.Text = "Edge // Zwolf // Moon // Toon // ttwiz_z"
 Credits.TextColor3 = Color3.new(1, 1, 1)
 Credits.ZIndex = 10
 
@@ -4256,7 +4256,7 @@ end
 CMDs = {}
 CMDs[#CMDs + 1] = {NAME = 'discord / support / help', DESC = 'Invite to the IY support server.'}
 CMDs[#CMDs + 1] = {NAME = 'console', DESC = 'Loads old Roblox console'}
-CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by Moon'}
+CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by ttwiz_z'}
 CMDs[#CMDs + 1] = {NAME = 'olddex / odex', DESC = 'Opens Old DEX by Moon'}
 CMDs[#CMDs + 1] = {NAME = 'remotespy / rspy', DESC = 'Opens Simple Spy V3'}
 CMDs[#CMDs + 1] = {NAME = 'audiologger / alogger', DESC = 'Opens Edges audio logger'}
