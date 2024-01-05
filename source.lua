@@ -12409,7 +12409,6 @@ task.spawn(function()
 end)
 
 task.spawn(function()
-    wait()
     Credits:TweenPosition(UDim2.new(0, 0, 0.9, 0), "Out", "Quart", 0.2)
     Logo:TweenSizeAndPosition(UDim2.new(0, 175, 0, 175), UDim2.new(0, 37, 0, 45), "Out", "Quart", 0.3)
     wait(1)
