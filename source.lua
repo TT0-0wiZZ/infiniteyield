@@ -1,3 +1,8 @@
+-- Infinite Yield FE
+-- Version: 6.0.0@ttwiz_z
+
+pcall(function() if getgenv then getfenv()._G = getgenv() end end)
+
 if _G.Dp638MqzuBrUX7Awf5J9eTJyb4C7a0eKG2ff6 and not _G.IY_DEBUG_Dp638MqzuBrUX7Awf5J9eTJyb4C7a0eKG2ff6 then
     return
 end
@@ -167,7 +172,7 @@ if get_hidden_gui or gethui then
     Main.DisplayOrder = 9e8
     Main.Parent = hiddenUI()
     PARENT = Main
-elseif (not is_sirhurt_closure) and (syn and syn.protect_gui) then
+elseif syn and syn.protect_gui then
     local Main = Instance.new("ScreenGui")
     Main.Name = randomString()
     Main.DisplayOrder = 9e8
