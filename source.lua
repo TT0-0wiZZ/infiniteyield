@@ -1,6 +1,7 @@
 -- Infinite Yield FE
 -- Version: 6.0.0@ttwiz_z
 
+
 pcall(function() if getgenv then getfenv()._G = getgenv() end end)
 
 if _G.Dp638MqzuBrUX7Awf5J9eTJyb4C7a0eKG2ff6 and not _G.IY_DEBUG_Dp638MqzuBrUX7Awf5J9eTJyb4C7a0eKG2ff6 then
@@ -1955,6 +1956,7 @@ local httprequest = (syn and syn.request) or (http and http.request) or http_req
 local PlaceId, JobId = game.PlaceId, game.JobId
 local clipBoard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
 local IsOnMobile = UserInputService.TouchEnabled and not (UserInputService.KeyboardEnabled and UserInputService.GamepadEnabled and GuiService:IsTenFootInterface())
+local TeleportCheck = false
 
 function writefileSoftware()
     if writefile then
@@ -3848,10 +3850,8 @@ SaveChatlogs.MouseButton1Down:Connect(function()
     end
 end)
 
-for _, plr in pairs(Players:GetChildren()) do
-    if plr.ClassName == "Player" then
-        ChatLog(plr)
-    end
+for _, plr in pairs(Players:GetPlayers()) do
+    ChatLog(plr)
 end
 
 Players.PlayerRemoving:Connect(function(player)
@@ -6221,10 +6221,9 @@ Close_4.MouseButton1Click:Connect(function()
 end)
 
 Players.LocalPlayer.OnTeleport:Connect(function(State)
-    if State == Enum.TeleportState.Started then
-        if Keep_IY_FE and queueteleport then
-            queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ttwizz/infiniteyield/master/source'))()")
-        end
+    if KeepInfYield and (not TeleportCheck) and queueteleport then
+        TeleportCheck = true
+        queueteleport("loadstring(game:HttpGet('https://raw.githubusercontent.com/ttwizz/infiniteyield/master/source'))()")
     end
 end)
 
@@ -6658,8 +6657,8 @@ addcmd("rejoin", {"rj"}, function(args, speaker)
 end)
 
 addcmd("autorejoin", {"autorj"}, function(args, speaker)
-	GuiService.ErrorMessageChanged:Connect(function()
-		execCmd("rejoin")
+    GuiService.ErrorMessageChanged:Connect(function()
+        execCmd("rejoin")
     end)
     notify("Auto Rejoin", "Auto rejoin enabled")
 end)
@@ -6667,7 +6666,7 @@ end)
 addcmd('serverhop',{'shop'},function(args, speaker)
     if httprequest then
         local servers = {}
-        local req = httprequest({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100", PlaceId)})
+        local req = httprequest({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100&excludeFullGames=true", PlaceId)})
         local body = HttpService:JSONDecode(req.Body)
         if body and body.data then
             for i, v in next, body.data do
@@ -7733,8 +7732,8 @@ end)
 addcmd('esp',{},function(args, speaker)
     if not CHMSenabled then
         ESPenabled = true
-        for i,v in pairs(Players:GetChildren()) do
-            if v.ClassName == "Player" and v.Name ~= speaker.Name then
+        for i,v in pairs(Players:GetPlayers()) do
+            if v.Name ~= speaker.Name then
                 ESP(v)
             end
         end
@@ -7827,8 +7826,8 @@ end)
 addcmd('chams',{},function(args, speaker)
     if not ESPenabled then
         CHMSenabled = true
-        for i,v in pairs(Players:GetChildren()) do
-            if v.ClassName == "Player" and v.Name ~= speaker.Name then
+        for i,v in pairs(Players:GetPlayers()) do
+            if v.Name ~= speaker.Name then
                 CHMS(v)
             end
         end
@@ -7839,7 +7838,7 @@ end)
 
 addcmd('nochams',{'unchams'},function(args, speaker)
     CHMSenabled = false
-    for i,v in pairs(Players:GetChildren()) do
+    for i,v in pairs(Players:GetPlayers()) do
         local chmsplr = v
         for i,c in pairs(COREGUI:GetChildren()) do
             if c.Name == chmsplr.Name..'_CHMS' then
@@ -8506,22 +8505,22 @@ addcmd("showprompts", {"showpurchaseprompts"}, function(args, speaker)
 end)
 
 promptNewRig = function(speaker, rig)
-	local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
-	if humanoid then
-		AvatarEditorService:PromptSaveAvatar(humanoid.HumanoidDescription, Enum.HumanoidRigType[rig])
-		local result = AvatarEditorService.PromptSaveAvatarCompleted:Wait()
-		if result == Enum.AvatarPromptResult.Success then
-			execCmd("reset")
-		end
-	end
+    local humanoid = speaker.Character:FindFirstChildWhichIsA("Humanoid")
+    if humanoid then
+        AvatarEditorService:PromptSaveAvatar(humanoid.HumanoidDescription, Enum.HumanoidRigType[rig])
+        local result = AvatarEditorService.PromptSaveAvatarCompleted:Wait()
+        if result == Enum.AvatarPromptResult.Success then
+            execCmd("reset")
+        end
+    end
 end
 
 addcmd("promptr6", {}, function(args, speaker)
-	promptNewRig(speaker, "R6")
+    promptNewRig(speaker, "R6")
 end)
 
 addcmd("promptr15", {}, function(args, speaker)
-	promptNewRig(speaker, "R15")
+    promptNewRig(speaker, "R15")
 end)
 
 addcmd('age',{},function(args, speaker)
@@ -8748,15 +8747,15 @@ addcmd('vehiclenoclip',{'vnoclip'},function(args, speaker)
 end)
 
 addcmd("vehicleclip", {"vclip", "unvnoclip", "unvehiclenoclip"}, function(args, speaker)
-	execCmd("clip")
-	for i, v in pairs(vnoclipParts) do
-		v.CanCollide = true
-	end
-	vnoclipParts = {}
+    execCmd("clip")
+    for i, v in pairs(vnoclipParts) do
+        v.CanCollide = true
+    end
+    vnoclipParts = {}
 end)
 
 addcmd("togglevnoclip", {}, function(args, speaker)
-	execCmd(Clip and "vnoclip" or "vclip")
+    execCmd(Clip and "vnoclip" or "vclip")
 end)
 
 addcmd('clientbring',{'cbring'},function(args, speaker)
@@ -8979,9 +8978,9 @@ addcmd('loopoof',{},function(args, speaker)
     oofing = true
     repeat wait(0.1)
         for i,v in pairs(Players:GetPlayers()) do
-            if v.Character ~= nil and v.Character:FindFirstChild'Head' then
+            if v.Character ~= nil and v.Character:FindFirstChild('Head') then
                 for _,x in pairs(v.Character.Head:GetChildren()) do
-                    if x:IsA'Sound' then x.Playing = true end
+                    if x:IsA('Sound') then x.Playing = true end
                 end
             end
         end
@@ -9064,16 +9063,16 @@ end)
 addcmd('god',{},function(args, speaker)
     local Cam = workspace.CurrentCamera
     local Pos, Char = Cam.CFrame, speaker.Character
-    local Human = Char and Char.FindFirstChildWhichIsA(Char, "Humanoid")
+    local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
     local nHuman = Human.Clone(Human)
     nHuman.Parent, speaker.Character = Char, nil
-    nHuman.SetStateEnabled(nHuman, 15, false)
-    nHuman.SetStateEnabled(nHuman, 1, false)
-    nHuman.SetStateEnabled(nHuman, 0, false)
-    nHuman.BreakJointsOnDeath, Human = true, Human.Destroy(Human)
+    nHuman:SetStateEnabled(15, false)
+    nHuman:SetStateEnabled(1, false)
+    nHuman:SetStateEnabled(0, false)
+    nHuman.BreakJointsOnDeath, Human = true, Human:Destroy()
     speaker.Character, Cam.CameraSubject, Cam.CFrame = Char, nHuman, wait() and Pos
     nHuman.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
-    local Script = Char.FindFirstChild(Char, "Animate")
+    local Script = Char:FindFirstChild("Animate")
     if Script then
         Script.Disabled = true
         wait()
@@ -9141,7 +9140,7 @@ addcmd('invisible',{'invis'},function(args, speaker)
                 Player.Character = Character
                 wait()
                 Character.Parent = workspace
-                Character:FindFirstChildWhichIsA'Humanoid':Destroy()
+                Character:FindFirstChildWhichIsA('Humanoid'):Destroy()
                 IsInvis = false
                 InvisibleCharacter.Parent = nil
                 invisRunning = false
@@ -9151,14 +9150,14 @@ addcmd('invisible',{'invis'},function(args, speaker)
                 Player.Character = Character
                 wait()
                 Character.Parent = workspace
-                Character:FindFirstChildWhichIsA'Humanoid':Destroy()
+                Character:FindFirstChildWhichIsA('Humanoid'):Destroy()
                 TurnVisible()
             end)
         end
     end
 
     local invisDied
-    invisDied = InvisibleCharacter:FindFirstChildWhichIsA'Humanoid'.Died:Connect(function()
+    invisDied = InvisibleCharacter:FindFirstChildWhichIsA('Humanoid').Died:Connect(function()
         Respawn()
         invisDied:Disconnect()
     end)
@@ -9194,7 +9193,7 @@ addcmd('invisible',{'invis'},function(args, speaker)
         IsInvis = false
         Player.Character.Animate.Disabled = true
         Player.Character.Animate.Disabled = false
-        invisDied = Character:FindFirstChildWhichIsA'Humanoid'.Died:Connect(function()
+        invisDied = Character:FindFirstChildWhichIsA('Humanoid').Died:Connect(function()
             Respawn()
             invisDied:Disconnect()
         end)
@@ -9208,7 +9207,7 @@ addcmd("visible", {"vis"}, function(args, speaker)
 end)
 
 addcmd("toggleinvis", {}, function(args, speaker)
-	execCmd(invisRunning and "visible" or "invisible")
+    execCmd(invisRunning and "visible" or "invisible")
 end)
 
 addcmd('toolinvisible',{'toolinvis','tinvis'},function(args, speaker)
@@ -9284,7 +9283,7 @@ end)
 
 addcmd("breakvelocity", {}, function(args, speaker)
     local BeenASecond, V3 = false, Vector3.new(0, 0, 0)
-    delay(1, function()
+    task.delay(1, function()
         BeenASecond = true
     end)
     while not BeenASecond do
@@ -9757,8 +9756,8 @@ end)
 
 addcmd('loopanimation', {'loopanim'},function(args, speaker)
     local Char = speaker.Character
-    local Human = Char and Char.FindFirstChildWhichIsA(Char, "Humanoid")
-    for _, v in ipairs(Human.GetPlayingAnimationTracks(Human)) do
+    local Human = Char and Char:FindFirstChildWhichIsA("Humanoid")
+    for _, v in ipairs(Human:GetPlayingAnimationTracks()) do
         v.Looped = true
     end
 end)
@@ -10386,7 +10385,7 @@ addcmd('carpet',{},function(args, speaker)
             carpet = speaker.Character:FindFirstChildWhichIsA('Humanoid'):LoadAnimation(carpetAnim)
             carpet:Play(.1, 1, 1)
             local carpetplr = Players[v].Name
-            carpetDied = speaker.Character:FindFirstChildWhichIsA'Humanoid'.Died:Connect(function()
+            carpetDied = speaker.Character:FindFirstChildWhichIsA('Humanoid').Died:Connect(function()
                 carpetLoop:Disconnect()
                 carpet:Stop()
                 carpetAnim:Destroy()
@@ -10893,12 +10892,12 @@ local function GetHandleTools(p)
     p = p or Players.LocalPlayer
     local r = {}
     for _, v in ipairs(p.Character and p.Character:GetChildren() or {}) do
-        if v.IsA(v, "BackpackItem") and v.FindFirstChild(v, "Handle") then
+        if v:IsA("BackpackItem") and v:FindFirstChild("Handle") then
             r[#r + 1] = v
         end
     end
     for _, v in ipairs(p.Backpack:GetChildren()) do
-        if v.IsA(v, "BackpackItem") and v.FindFirstChild(v, "Handle") then
+        if v:IsA("BackpackItem") and v:FindFirstChild("Handle") then
             r[#r + 1] = v
         end
     end
@@ -11473,8 +11472,8 @@ addcmd('handlekill', {'hkill'}, function(args, speaker)
         return notify('Incompatible Software', 'Your Software does not support this command (missing firetouchinterest)')
     end
     local RS = RunService.RenderStepped
-    local Tool = speaker.Character.FindFirstChildWhichIsA(speaker.Character, "Tool")
-    local Handle = Tool and Tool.FindFirstChild(Tool, "Handle")
+    local Tool = speaker.Character:FindFirstChildWhichIsA("Tool")
+    local Handle = Tool and Tool:FindFirstChild("Handle")
     if not Tool or not Handle then
         return notify("Handle Kill", "You need to hold a \"Tool\" that does damage on touch. For example the default \"Sword\" tool.")
     end
@@ -11482,12 +11481,12 @@ addcmd('handlekill', {'hkill'}, function(args, speaker)
         v = Players[v]
         task.spawn(function()
             while Tool and speaker.Character and v.Character and Tool.Parent == speaker.Character do
-                local Human = v.Character.FindFirstChildWhichIsA(v.Character, "Humanoid")
+                local Human = v.Character:FindFirstChildWhichIsA("Humanoid")
                 if not Human or Human.Health <= 0 then
                     break
                 end
-                for _, v1 in ipairs(v.Character.GetChildren(v.Character)) do
-                    v1 = ((v1.IsA(v1, "BasePart") and firetouchinterest(Handle, v1, 1, (RS.Wait(RS) and nil) or firetouchinterest(Handle, v1, 0)) and nil) or v1) or v1
+                for _, v1 in ipairs(v.Character:GetChildren()) do
+                    v1 = ((v1:IsA("BasePart") and firetouchinterest(Handle, v1, 1, (RS.Wait(RS) and nil) or firetouchinterest(Handle, v1, 0)) and nil) or v1) or v1
                 end
             end
             notify("Handle Kill Stopped!", v.Name .. " died/left or you unequipped the tool!")
@@ -11495,6 +11494,7 @@ addcmd('handlekill', {'hkill'}, function(args, speaker)
     end
 end)
 
+local tpwalking = false
 local hb = RunService.Heartbeat
 addcmd('tpwalk', {'teleportwalk'}, function(args, speaker)
     tpwalking = true
