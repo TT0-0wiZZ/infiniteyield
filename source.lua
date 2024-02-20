@@ -4507,6 +4507,8 @@ CMDs[#CMDs + 1] = {NAME = 'teleport / tp [plr] [plr] (TOOL)', DESC = 'Teleports 
 CMDs[#CMDs + 1] = {NAME = 'fastteleport / fasttp [plr] [plr] (TOOL)', DESC = 'Teleports a player to another player (less reliable) (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'fling', DESC = 'Flings anyone you touch'}
 CMDs[#CMDs + 1] = {NAME = 'unfling', DESC = 'Disables the fling command'}
+CMDs[#CMDs + 1] = {NAME = 'flyfling', DESC = 'Basically the invisfling command but not invisible'}
+CMDs[#CMDs + 1] = {NAME = 'unflyfling', DESC = 'Disables the flyfling command'}
 CMDs[#CMDs + 1] = {NAME = 'invisfling', DESC = 'Enables invisible fling'}
 CMDs[#CMDs + 1] = {NAME = 'loopoof', DESC = 'Loops everyones character sounds (everyone can hear)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopoof', DESC = 'Stops the oof chaos'}
@@ -11351,6 +11353,20 @@ addcmd('togglefling',{},function(args, speaker)
     else
         execCmd('fling')
     end
+end)
+
+addcmd("flyfling", {}, function(args, speaker)
+    execCmd("unvehiclefly\\unfling\\unnoclip")
+    wait()
+    execCmd("vehiclefly\\fling\\noclip")
+end)
+
+addcmd("unflyfling", {}, function(args, speaker)
+    execCmd("unvehiclefly\\unfling\\unnoclip\\breakvelocity")
+end)
+
+addcmd("toggleflyfling", {}, function(args, speaker)
+    execCmd(flinging and "unflyfling" or "flyfling")
 end)
 
 addcmd('invisfling',{},function(args, speaker)

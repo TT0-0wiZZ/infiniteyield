@@ -6,9 +6,9 @@ The best command line script for roblox.
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ttwizz/infiniteyield/master/source.lua", true))()
 ```
 
- - Currently 377 commands
+ - More than 400 commands
  - Open Source
- - 6 years of development
+ - 10 years of development
 
 ## Developers
 ### Creator: Edge
